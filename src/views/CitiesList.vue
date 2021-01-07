@@ -6,7 +6,8 @@
               {{city}}
           </div>
       </div>
-      <button @click="openAddCityModal()">Add city</button>
+      <button class="btn btn-primary" @click="openAddCityModal()">Add city</button>
+      <button class="btn btn-danger" @click="clearCitiesList()">Clear list</button>
 
   <b-modal id="modal" hide-footer>
       <template #modal-title>
@@ -56,6 +57,12 @@ var confirmCity = function(){
     this.cities.push(this.newCity)
     this.$bvModal.hide('modal')
     this.newCity = ""
+    localStorage.setItem('citiesList', JSON.stringify(this.cities))
+}
+
+var clearCitiesList = function() {
+    this.cities = []
+    localStorage.removeItem('citiesList')
 }
 
 export default {
@@ -63,7 +70,8 @@ export default {
   data() {
       return {
           newCity,
-          cities
+          cities,
+          clearCitiesList
       } 
   },
   components: {
@@ -74,6 +82,15 @@ export default {
       openAddCityModal,
       closeCityModal,
       confirmCity
+  },
+  created: function () {
+      console.log("created")
+      var storedCities = localStorage.getItem("citiesList");
+      if(storedCities){
+          storedCities = JSON.parse(localStorage.getItem("citiesList"));
+          console.log(storedCities)
+          this.cities = storedCities
+      }
   }
 }
 </script>
