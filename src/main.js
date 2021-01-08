@@ -6,6 +6,7 @@ import 'bootstrap'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import BootstrapVue from 'bootstrap-vue'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
+import './filters'
 
 Vue.config.productionTip = false
 

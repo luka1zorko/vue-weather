@@ -3,7 +3,8 @@
       <div v-if="cities.length == 0">No cities</div>
       <div v-else>
           <div v-for="(city, i) in cities" :key="i" @click="toWeather(city)">
-              {{city}}
+              <span>{{city}}</span> 
+              <span v-if="weather[i]">{{weather[i].data.main.temp | toDegreeC}}</span>
           </div>
       </div>
       <button class="btn btn-primary" @click="openAddCityModal()">Add city</button>
@@ -27,9 +28,11 @@
 </template>
 
 <script>
+import weatherApi from '@/services/api/openWeatherApi.js'
 
 var newCity = ""
 var cities = []
+var weather = []
 
 var toWeather = function (city) {
     console.log(city);
@@ -52,17 +55,33 @@ var closeCityModal = function(){
     this.newCity = ""
 }
 
-var confirmCity = function(){
+var confirmCity = async function(){
     console.log("Confirmed city selection")
     this.cities.push(this.newCity)
     this.$bvModal.hide('modal')
+    let weather = await weatherApi.getCurrentWeather(this.newCity)
+    this.weather.push(weather)
     this.newCity = ""
     localStorage.setItem('citiesList', JSON.stringify(this.cities))
 }
 
 var clearCitiesList = function() {
     this.cities = []
+    this.weather = []
     localStorage.removeItem('citiesList')
+}
+
+var citiesWeather = async function(vm){
+    console.log("getting current weather for all cities")
+    vm.weather = []
+    for(var city of vm.cities){
+        let weather = await weatherApi.getCurrentWeather(city)
+        console.log(city)
+        console.log(weather)
+        vm.weather.push(weather)
+    }
+    console.log("weather")
+    console.log(vm.weather)
 }
 
 export default {
@@ -71,7 +90,7 @@ export default {
       return {
           newCity,
           cities,
-          clearCitiesList
+          weather
       } 
   },
   components: {
@@ -81,15 +100,18 @@ export default {
       toWeather,
       openAddCityModal,
       closeCityModal,
-      confirmCity
+      confirmCity,
+      clearCitiesList,
+      citiesWeather
   },
   created: function () {
-      console.log("created")
+      console.log("created citiesList")
       var storedCities = localStorage.getItem("citiesList");
       if(storedCities){
           storedCities = JSON.parse(localStorage.getItem("citiesList"));
           console.log(storedCities)
           this.cities = storedCities
+          citiesWeather(this)
       }
   }
 }
