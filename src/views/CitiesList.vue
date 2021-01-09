@@ -3,7 +3,7 @@
       <div v-if="cities.length == 0">No cities</div>
       <div v-else>
           <div v-for="(city, i) in cities" :key="i" @click="toWeather(city)">
-              <span>{{city}}</span> 
+              <span>{{city.name}}</span> 
               <span v-if="weather[i]">{{weather[i].data.main.temp | toDegreeC}}</span>
           </div>
       </div>
@@ -35,7 +35,7 @@ var cities = []
 var weather = []
 
 var toWeather = function (city) {
-    console.log(city);
+    console.log("routing to weather for " + city.name);
     this.$router.push({
         name: 'CityWeather',
         params: {
@@ -57,10 +57,11 @@ var closeCityModal = function(){
 
 var confirmCity = async function(){
     console.log("Confirmed city selection")
-    this.cities.push(this.newCity)
-    this.$bvModal.hide('modal')
     let weather = await weatherApi.getCurrentWeather(this.newCity)
+    var cityObject = {name: this.newCity, id: weather.data.id}
+    this.cities.push(cityObject)
     this.weather.push(weather)
+    this.$bvModal.hide('modal')
     this.newCity = ""
     localStorage.setItem('citiesList', JSON.stringify(this.cities))
 }
@@ -75,7 +76,7 @@ var citiesWeather = async function(vm){
     console.log("getting current weather for all cities")
     vm.weather = []
     for(var city of vm.cities){
-        let weather = await weatherApi.getCurrentWeather(city)
+        let weather = await weatherApi.getCurrentWeather(city.name)
         console.log(city)
         console.log(weather)
         vm.weather.push(weather)
