@@ -19,7 +19,7 @@ export default {
     getCurrentWeatherFromId(cityId, cityName){
         console.log("fetching current weather for " + cityName, cityId)
         return axios
-            .get(`http://api.openweathermap.org/data/2.5/weather?id=${cityId}&appid=${key}`)
+            .get(`http://api.openweathermap.org/data/2.5/weather?id=${cityId}&appid=${key}&units=metric`)
             .then(response => {
                 console.log("response")
                 console.log(response)

@@ -24,13 +24,13 @@ var getDayName = function(timestamp){
 
 var splitByDays = function(vm){
     console.log("splitting weather info by days")
-    dailyWeather = []
+    vm.dailyWeather = []
     var prevDayName = getDayName(vm.weatherForecast.list[0].dt)
     var dayWeather = []
     for(var el of vm.weatherForecast.list){
         var dayName = getDayName(el.dt)
         if(dayName != prevDayName){
-            dailyWeather.push({dayName: prevDayName, weatherData:dayWeather})
+            vm.dailyWeather.push({dayName: prevDayName, weatherData:dayWeather})
             dayWeather = []
         }    
         dayWeather.push(el)

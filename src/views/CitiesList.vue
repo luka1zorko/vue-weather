@@ -1,22 +1,32 @@
 <template>
   <div class="home">
       <div v-if="cities.length == 0">No cities</div>
-      <div v-else>
-          <div v-for="(city, i) in cities" :key="i" @click="toWeather(city)">
-              <span>{{city.name}}</span> 
-              <span v-if="weather[i]">{{weather[i].data.main.temp | toDegreeC}}</span>
-          </div>
+      <div v-else class="col-md-6 col-sm-12 offset-md-3">
+          <table class="table table-striped">
+              <thead></thead>
+              <tbody>
+                  <tr v-for="(city, i) in cities" :key="i" @click="toWeather(city)">
+                  <td>{{city.name}}</td>
+                  <td v-if="weather[i]">{{weather[i].data.main.temp | toDegreeC}}</td>
+              </tr>
+              </tbody>
+          </table>
       </div>
-      <button class="btn btn-primary" @click="openAddCityModal()">Add city</button>
-      <button class="btn btn-danger" @click="clearCitiesList()">Clear list</button>
+      <div id="buttons">
+          <button class="btn btn-primary" @click="openAddCityModal()">Add city</button>
+          <button class="btn btn-danger" @click="clearCitiesList()">Clear list</button>
+      </div>
 
   <b-modal id="modal" hide-footer>
       <template #modal-title>
-      Add a new city
-    </template>
-    <div class="">
-        Enter the name of your city
-        <input v-model="newCity" type="text" />
+        Add a new city
+      </template>
+
+    <div class="form-group row">
+        <label for="cityInput" class="col col-form-label">Enter the name of your city:</label>
+        <div class="col">
+            <input type="text" class="form-control" id="cityInput" placeholder="City name" v-model="newCity">
+        </div>
     </div>
     <div id="modal-button-wrapper">
         <button class="btn btn-primary" @click="confirmCity()">Add City</button>
@@ -56,12 +66,25 @@ var closeCityModal = function(){
     this.newCity = ""
 }
 
+// is the chosen city already on the list ?
+var checkCityInclusion = function(cities, newCity) {
+    console.log("checking city inclusion: " + newCity)
+    console.log(cities)
+    for(var city of cities){
+        if(city.name == newCity)
+            return true
+    }
+    return false
+}
+
 var confirmCity = async function(){
     console.log("Confirmed city selection")
-    let weather = await weatherApi.getCurrentWeather(this.newCity)
-    var cityObject = {name: this.newCity, id: weather.data.id}
-    this.cities.push(cityObject)
-    this.weather.push(weather)
+    if(!checkCityInclusion(this.cities, this.newCity)){
+        let weather = await weatherApi.getCurrentWeather(this.newCity)
+        var cityObject = {name: this.newCity, id: weather.data.id}
+        this.cities.push(cityObject)
+        this.weather.push(weather)
+    }
     this.$bvModal.hide('modal')
     this.newCity = ""
     localStorage.setItem('citiesList', JSON.stringify(this.cities))
@@ -118,3 +141,17 @@ export default {
   }
 }
 </script>
+
+
+<style scoped>
+
+#modal-button-wrapper, #buttons{
+    margin-top: 10px;
+    text-align: center;
+}
+
+#modal-button-wrapper > button, #buttons > button{
+    margin: 3px;
+}
+
+</style>
