@@ -39,7 +39,8 @@ var toWeather = function (city) {
     this.$router.push({
         name: 'CityWeather',
         params: {
-            city
+            cityName: city.name,
+            cityId: city.id.toString()
         }
     });
 }

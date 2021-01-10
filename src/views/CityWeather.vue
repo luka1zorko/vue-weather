@@ -1,14 +1,17 @@
 <template>
   <div>
     <div>
-      <span @click="displayCurrentWeather=true">{{city.name}} Current Weather</span>
-      <span @click="displayCurrentWeather=false">{{city.name}} 3 day forecast</span>
+      <h3>{{cityName}}</h3>
+    </div>
+    <div>
+      <span @click="displayCurrentWeather=true">Current Weather</span>
+      <span @click="displayCurrentWeather=false">Weather forecast</span>
     </div>
     <div v-if="currentWeather.data && displayCurrentWeather">
-      <CurrentWeatherComp :currentWeather="currentWeather"></CurrentWeatherComp>
+      <CurrentWeatherComp :currentWeather="currentWeather.data"></CurrentWeatherComp>
     </div>
     <div v-if="weatherForecast.data && !displayCurrentWeather">
-      <WeatherForecastComp :weatherForecast="weatherForecast"></WeatherForecastComp>
+      <WeatherForecastComp :weatherForecast="weatherForecast.data"></WeatherForecastComp>
     </div>
   </div>
 </template>
@@ -24,10 +27,10 @@ var displayCurrentWeather = true
 
 var cityWeather = async function(vm){
     console.log("getting city weather")
-    vm.currentWeather = await weatherApi.getCurrentWeather(vm.city.name)
+    vm.currentWeather = await weatherApi.getCurrentWeatherFromId(vm.cityId)
     console.log(vm.currentWeather)
     console.log("getting weather forecast")
-    vm.weatherForecast = await weatherApi.getWeatherForcast(vm.city)
+    vm.weatherForecast = await weatherApi.getWeatherForcast(vm.cityId, vm.cityName)
     console.log(vm.weatherForecast)
     console.log(vm.weatherForecast.data.list.length)
 }
@@ -42,7 +45,8 @@ export default {
       } 
   },
   props: {
-    city: Object
+    cityName: String,
+    cityId: String
   },
   components: {
     WeatherForecastComp,

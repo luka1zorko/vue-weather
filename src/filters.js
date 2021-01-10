@@ -7,3 +7,15 @@ Vue.filter('toDegreeC', function (value) {
 Vue.filter('toPercent', function (value) {
     return `${value}%`;
 });
+
+Vue.filter('toSpeedMs', function (value) {
+    return `${value} m/s`;
+});
+
+Vue.filter('toPressureHpa', function (value) {
+    return `${value} HPa`;
+});
+
+Vue.filter('fullDateToHour', function (value) {
+    return `${value.split(" ")[1]}`;
+});

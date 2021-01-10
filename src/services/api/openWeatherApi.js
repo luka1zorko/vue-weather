@@ -16,10 +16,23 @@ export default {
                 console.log(error)
             })
     },
-    getWeatherForcast(cityData) {
-        console.log("fetching weather forcast for " + cityData.name, cityData.id)
+    getCurrentWeatherFromId(cityId, cityName){
+        console.log("fetching current weather for " + cityName, cityId)
         return axios
-            .get(`http://api.openweathermap.org/data/2.5/forecast?id=${cityData.id}&appid=${key}&units=metric`)
+            .get(`http://api.openweathermap.org/data/2.5/weather?id=${cityId}&appid=${key}`)
+            .then(response => {
+                console.log("response")
+                console.log(response)
+                return response;
+            })
+            .catch(error => {
+                console.log(error)
+            })
+    },
+    getWeatherForcast(cityId, cityName) {
+        console.log("fetching weather forcast for " + cityName, cityId)
+        return axios
+            .get(`http://api.openweathermap.org/data/2.5/forecast?id=${cityId}&appid=${key}&units=metric`)
             .then(response => {
                 console.log("response")
                 console.log(response)
