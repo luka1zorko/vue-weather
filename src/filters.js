@@ -17,5 +17,5 @@ Vue.filter('toPressureHpa', function (value) {
 });
 
 Vue.filter('fullDateToHour', function (value) {
-    return `${value.split(" ")[1]}`;
+    return `${value.split(" ")[1].slice(0, 5)}`;
 });
