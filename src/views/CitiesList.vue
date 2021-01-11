@@ -5,16 +5,18 @@
           <table class="table table-striped">
               <thead></thead>
               <tbody>
-                  <tr v-for="(city, i) in cities" :key="i" @click="toWeather(city)">
+                <tr v-for="(city, i) in cities" :key="i" @click="toWeather(city)">
                   <td>{{city.name}}</td>
                   <td v-if="weather[i]">{{weather[i].data.main.temp | toDegreeC}}</td>
-              </tr>
+                  <td v-else> </td>
+                  <td @click.stop="removeCity(i)"><i class="fas fa-trash-alt"></i></td>
+                </tr>
               </tbody>
           </table>
       </div>
       <div id="buttons">
           <button class="btn btn-primary" @click="openAddCityModal()">Add city</button>
-          <button class="btn btn-danger" @click="clearCitiesList()">Clear list</button>
+          <button class="btn btn-danger" @click="clearCitiesList()" v-show="weather.length">Clear list</button>
       </div>
 
   <b-modal id="modal" hide-footer>
@@ -101,12 +103,16 @@ var citiesWeather = async function(vm){
     vm.weather = []
     for(var city of vm.cities){
         let weather = await weatherApi.getCurrentWeather(city.name)
-        console.log(city)
-        console.log(weather)
         vm.weather.push(weather)
     }
     console.log("weather")
     console.log(vm.weather)
+}
+
+var removeCity = function(i) {  
+    console.log("removinc city " + i)
+    this.cities.splice(i, 1)
+    localStorage.setItem('citiesList', JSON.stringify(this.cities))
 }
 
 export default {
@@ -127,7 +133,8 @@ export default {
       closeCityModal,
       confirmCity,
       clearCitiesList,
-      citiesWeather
+      citiesWeather,
+      removeCity
   },
   created: function () {
       console.log("created citiesList")
@@ -152,6 +159,10 @@ export default {
 
 #modal-button-wrapper > button, #buttons > button{
     margin: 3px;
+}
+
+.fa-trash-alt {
+    color: deepskyblue;
 }
 
 </style>

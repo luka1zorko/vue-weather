@@ -2,9 +2,8 @@
     <div id="currentWeatherGrid">
         <!--Current temperature-->
         <div class="gridCurrentTemp">
-            <div>{{currentWeather.main.temp | toDegreeC}}</div>
-            <div v-if="currentWeather.rain">RAINING</div><!--TODO replace text with image-->
-            <div v-if="currentWeather.snow">SNOWING</div>
+            <div id="mainTemp">{{currentWeather.main.temp | toDegreeC}}</div>
+            <div id="weatherDescription">{{currentWeather.weather[0].description}}</div><!--TODO replace text with image-->
         </div>
         <!--Additional info-->
         <div>Feels Like: </div><div>{{currentWeather.main.feels_like | toDegreeC}}</div>
@@ -12,6 +11,8 @@
         <div>Pressure: </div><div>{{currentWeather.main.pressure | toPressureHpa}}</div>
         <div>Wind speed: </div><div>{{currentWeather.wind.speed | toSpeedMs}}</div>
         <div>Cloudiness: </div><div>{{currentWeather.clouds.all | toPercent}}</div>
+        <div v-if="currentWeather.rain">Rain: </div><div v-if="currentWeather.rain">{{currentWeather.rain["1h"] | toMilimeterPerHour}}</div>
+        <div v-if="currentWeather.snow">Snow: </div><div v-if="currentWeather.snow">{{currentWeather.snow["1h"] | toMilimeterPerHour}}</div>
     </div>
 </template>
 
@@ -47,15 +48,20 @@ export default {
     color: #444;
     max-width: 600px;
     margin: auto;
+    margin-bottom: 30px;
 }
 
 .gridCurrentTemp {
   grid-row-start: 1;
-  grid-row-end: 6;
-  font-size: 60px;
+  grid-row-end: 7;
+  font-size: 50px;
   color: deepskyblue; /*TODO change color with temperature*/ 
   display: grid;
   align-items: center;
+}
+
+.gridCurrentTemp > #weatherDescription {
+    font-size: 35px;
 }
 
 </style>

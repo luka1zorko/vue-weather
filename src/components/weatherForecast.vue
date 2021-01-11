@@ -1,7 +1,7 @@
 <template>
     <div>
         <div id="week-days">
-            <button :class="['blueButton', 'shadowed', 'pill', 'week-day']" v-for="(el, i) in dailyWeather" :key="i" @click="changeDay(i)">
+            <button :class="['blueButton', 'shadowed', 'pill', 'week-day', (selectedDay == i) ? 'activated' : '']" v-for="(el, i) in dailyWeather" :key="i" @click="changeDay(i)">
                 <div>
                     {{el.dayName}}
                 </div>
@@ -75,7 +75,7 @@ export default {
 <style scoped>
 
 #week-days {
-    margin-bottom: 10px;
+    margin-bottom: 20px;
 }
 
 </style>

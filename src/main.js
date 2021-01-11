@@ -7,6 +7,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import BootstrapVue from 'bootstrap-vue'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
 import './filters'
+import '@fortawesome/fontawesome-free/css/all.css'
 
 Vue.config.productionTip = false
 
