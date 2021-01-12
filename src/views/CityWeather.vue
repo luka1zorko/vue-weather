@@ -87,4 +87,8 @@ export default {
   color: white;
 }
 
+button {
+  margin-top: 15px;
+}
+
 </style>

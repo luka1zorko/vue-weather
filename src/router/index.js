@@ -15,6 +15,11 @@ const routes = [
     name: 'CityWeather',
     props: true,
     component: () => import(/* webpackChunkName: "about" */ '../views/CityWeather.vue')
+  },
+  {
+    path: '/languageSelection/:languageId',
+    name: 'LanguageSelection',
+    component: () => import(/* webpackChunkName: "about" */ '../views/LanguageSelection.vue')
   }
   
 ]

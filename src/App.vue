@@ -1,30 +1,80 @@
 <template>
   <div id="app">
+    <div id="nav">
+            <button class="headerButton shadowed" @click="home()">
+                <div class="headerIconWrapper">
+                    <i class="fas fa-home"></i>
+                </div>
+                <span>Home</span>
+            </button>
+            <button class="headerButton shadowed" @click="back()" v-show="$route.path != '/'">
+                <div class="headerIconWrapper">
+                    <i class="fas fa-reply"></i>
+                </div>
+                <span>Back</span>
+            </button>
+            <button @click="toLanguageSelect()" class="headerButton shadowed" style="margin-left:auto">
+                <img :src="images[$store.state.language + 'Flag']" alt="sad" class="headerFlag">
+                {{$store.state.languageDict[$store.state.language]}}
+            </button>
+        </div>
     <router-view/>
   </div>
 </template>
 
+
+<script>
+
+    var home = function () {
+      if(this.$route.name == "CitiesList")
+        return;
+      this.$router.push('/')
+    }
+
+    var back = function () {
+      this.$router.go(-1)
+    }
+
+    var toLanguageSelect = function () {
+      console.log("to language select")
+      this.$router.push('/languageSelection/' + this.$store.state.language)
+    }
+
+    import slFlag from "./assets/flag-sl.png"
+    import enFlag from "./assets/flag-en.png"
+    export default {
+        name: 'app',
+        data() {
+            return {
+                images: {
+                    slFlag,
+                    enFlag
+                },
+            }
+        },
+        methods: {
+            home,
+            back,
+            toLanguageSelect
+        }
+    }
+
+</script>
+
+
 <style>
+
+* {
+    box-sizing: border-box;
+}
+
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  margin: 5%;
-}
-
-#nav {
-  padding: 30px;
-}
-
-#nav a {
-  font-weight: bold;
-  color: #2c3e50;
-}
-
-#nav a.router-link-exact-active {
-  color: #42b983;
+  margin: 12vh 5%;
 }
 
 .blueButton {
@@ -59,6 +109,40 @@ button {
 button.activated {
     box-shadow: 0 0 10px 1px deepskyblue;
     border: 1px solid white;
+}
+
+#nav {
+    padding: 30px 2vw;
+    background-color:green;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 10vh;
+    display: flex;
+    align-items: flex-end;
+    font-size: 2.5vh;
+}
+
+.headerButton {
+    border-radius: 50px;
+    border: 0px;
+    min-width: 100px;
+    padding-right: 15px;
+    margin-left: 10px;
+}
+
+.headerIconWrapper {
+    float:left;
+    margin-left: 5px;
+    color: rgb(7,153,226);
+}
+
+.headerFlag {
+    width: 25px;
+    margin-right: 5px;
+    margin-top: 5px;
+    float: left;
 }
 
 </style>

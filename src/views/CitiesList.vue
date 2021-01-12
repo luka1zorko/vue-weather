@@ -1,5 +1,6 @@
 <template>
   <div class="home">
+      <h3 class="title">My cities</h3>
       <div v-if="cities.length == 0">No cities</div>
       <div v-else class="col-md-6 col-sm-12 offset-md-3">
           <table class="table table-striped">
@@ -163,6 +164,10 @@ export default {
 
 .fa-trash-alt {
     color: deepskyblue;
+}
+
+h3 {
+    margin-bottom: 25px;
 }
 
 </style>
