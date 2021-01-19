@@ -1,6 +1,6 @@
 <template>
   <div class="home">
-      <h3 class="title">My cities</h3>
+      <h3 class="title">{{captions.citiesList.myCities}}</h3>
       <div v-if="cities.length == 0">No cities</div>
       <div v-else class="col-md-6 col-sm-12 offset-md-3">
           <table class="table table-striped">
@@ -16,24 +16,24 @@
           </table>
       </div>
       <div id="buttons">
-          <button class="btn btn-primary" @click="openAddCityModal()">Add city</button>
-          <button class="btn btn-danger" @click="clearCitiesList()" v-show="weather.length">Clear list</button>
+          <button class="btn btn-primary" @click="openAddCityModal()">{{captions.citiesList.addCity}}</button>
+          <button class="btn btn-danger" @click="clearCitiesList()" v-show="weather.length">{{captions.citiesList.clearList}}</button>
       </div>
 
   <b-modal id="modal" hide-footer>
       <template #modal-title>
-        Add a new city
+        {{captions.citiesList.addCityText}}
       </template>
 
     <div class="form-group row">
-        <label for="cityInput" class="col col-form-label">Enter the name of your city:</label>
+        <label for="cityInput" class="col col-form-label">{{captions.citiesList.enterCityName}}:</label>
         <div class="col">
-            <input type="text" class="form-control" id="cityInput" placeholder="City name" v-model="newCity">
+            <input type="text" class="form-control" id="cityInput" :placeholder="captions.citiesList.cityName" v-model="newCity">
         </div>
     </div>
     <div id="modal-button-wrapper">
-        <button class="btn btn-primary" @click="confirmCity()">Add City</button>
-        <button class="btn btn-danger" @click="closeCityModal()">Cancel</button>
+        <button class="btn btn-primary" @click="confirmCity()">{{captions.citiesList.addCity}}</button>
+        <button class="btn btn-danger" @click="closeCityModal()">{{captions.app.cancel}}</button>
     </div>
   </b-modal>
 
@@ -146,6 +146,11 @@ export default {
           this.cities = storedCities
           citiesWeather(this)
       }
+  },
+  computed: {
+    captions() {
+      return this.$store.state.captions[this.$store.state.language]
+    }
   }
 }
 </script>

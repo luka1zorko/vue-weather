@@ -4,8 +4,8 @@
       <h3>{{cityName}}</h3>
     </div>
     <div id="weatherMenu">
-      <div :class="[displayCurrentWeather ? 'selected' : '']" @click="displayCurrentWeather=true">Current Weather</div>
-      <div :class="[!displayCurrentWeather ? 'selected' : '']" @click="displayCurrentWeather=false">Weather forecast</div>
+      <div :class="[displayCurrentWeather ? 'selected' : '']" @click="displayCurrentWeather=true">{{captions.cityWeather.currentWeather}}</div>
+      <div :class="[!displayCurrentWeather ? 'selected' : '']" @click="displayCurrentWeather=false">{{captions.cityWeather.weatherForecast}}</div>
     </div>
     <div v-if="currentWeather.data && displayCurrentWeather">
       <CurrentWeatherComp :currentWeather="currentWeather.data"></CurrentWeatherComp>
@@ -14,7 +14,7 @@
       <WeatherForecastComp :weatherForecast="weatherForecast.data"></WeatherForecastComp>
     </div>
     <div>
-      <button class="btn btn-primary" @click="toCitiesList()">Back to cities list</button>
+      <button class="btn btn-primary" @click="toCitiesList()">{{captions.cityWeather.backToCitiesList}}</button>
     </div>
   </div>
 </template>
@@ -67,6 +67,11 @@ export default {
   mounted () {
     console.log("mounted weather")
     cityWeather(this)
+  },
+  computed: {
+    captions() {
+      return this.$store.state.captions[this.$store.state.language]
+    }
   }
 }
 </script>

@@ -3,7 +3,7 @@
         <div id="week-days">
             <button :class="['blueButton', 'shadowed', 'pill', 'week-day', (selectedDay == i) ? 'activated' : '']" v-for="(el, i) in dailyWeather" :key="i" @click="changeDay(i)">
                 <div>
-                    {{el.dayName}}
+                    {{captions.daysOfWeek[el.dayName]}}
                 </div>
             </button>
         </div>
@@ -68,6 +68,11 @@ export default {
       console.log("mounted weatherForecast")
       console.log(this.weatherForecast)
       splitByDays(this)
+  },
+  computed: {
+    captions() {
+      return this.$store.state.captions[this.$store.state.language]
+    }
   }
 }
 </script>

@@ -5,13 +5,13 @@
                 <div class="headerIconWrapper">
                     <i class="fas fa-home"></i>
                 </div>
-                <span>Home</span>
+                <span>{{$store.state.captions[$store.state.language].app.home}}</span>
             </button>
             <button class="headerButton shadowed" @click="back()" v-show="$route.path != '/'">
                 <div class="headerIconWrapper">
                     <i class="fas fa-reply"></i>
                 </div>
-                <span>Back</span>
+                <span>{{$store.state.captions[$store.state.language].app.buttonBack}}</span>
             </button>
             <button @click="toLanguageSelect()" class="headerButton shadowed" style="margin-left:auto">
                 <img :src="images[$store.state.language + 'Flag']" alt="sad" class="headerFlag">

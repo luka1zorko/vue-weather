@@ -6,13 +6,13 @@
             <div id="weatherDescription">{{currentWeather.weather[0].description}}</div><!--TODO replace text with image-->
         </div>
         <!--Additional info-->
-        <div>Feels Like: </div><div>{{currentWeather.main.feels_like | toDegreeC}}</div>
-        <div>Humidity: </div><div>{{currentWeather.main.humidity | toPercent}}</div>
-        <div>Pressure: </div><div>{{currentWeather.main.pressure | toPressureHpa}}</div>
-        <div>Wind speed: </div><div>{{currentWeather.wind.speed | toSpeedMs}}</div>
-        <div>Cloudiness: </div><div>{{currentWeather.clouds.all | toPercent}}</div>
-        <div v-if="currentWeather.rain">Rain: </div><div v-if="currentWeather.rain">{{currentWeather.rain["1h"] | toMilimeterPerHour}}</div>
-        <div v-if="currentWeather.snow">Snow: </div><div v-if="currentWeather.snow">{{currentWeather.snow["1h"] | toMilimeterPerHour}}</div>
+        <div>{{captions.currentWeather.feelsLike}}: </div><div>{{currentWeather.main.feels_like | toDegreeC}}</div>
+        <div>{{captions.currentWeather.humidity}}: </div><div>{{currentWeather.main.humidity | toPercent}}</div>
+        <div>{{captions.currentWeather.pressure}}: </div><div>{{currentWeather.main.pressure | toPressureHpa}}</div>
+        <div>{{captions.currentWeather.windSpeed}}: </div><div>{{currentWeather.wind.speed | toSpeedMs}}</div>
+        <div>{{captions.currentWeather.cloudiness}}: </div><div>{{currentWeather.clouds.all | toPercent}}</div>
+        <div v-if="currentWeather.rain">{{captions.currentWeather.rain}}: </div><div v-if="currentWeather.rain">{{currentWeather.rain["1h"] | toMilimeterPerHour}}</div>
+        <div v-if="currentWeather.snow">{{captions.currentWeather.snow}}: </div><div v-if="currentWeather.snow">{{currentWeather.snow["1h"] | toMilimeterPerHour}}</div>
     </div>
 </template>
 
@@ -35,6 +35,11 @@ export default {
   mounted () {
       console.log("mounter currentWeather")
       console.log(this.currentWeather)
+  },
+  computed: {
+    captions() {
+      return this.$store.state.captions[this.$store.state.language]
+    }
   }
 }
 </script>
