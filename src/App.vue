@@ -56,6 +56,9 @@
             home,
             back,
             toLanguageSelect
+        },
+        created: function() {
+            this.$store.commit('setLanguage', localStorage.getItem("language"))
         }
     }
 

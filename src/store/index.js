@@ -18,11 +18,16 @@ const defaultState = function () {
 }
 
 export default new Vuex.Store({
-  state: defaultState(),
-  mutations: {
-  },
-  actions: {
-  },
-  modules: {
-  }
+    state: defaultState(),
+    mutations: {
+        setLanguage(state, langCode) {
+            console.log("setting language to " + langCode)
+            state.language = langCode
+        },
+    },
+    actions: {
+
+    },
+    modules: {
+    }
 })
