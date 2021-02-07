@@ -20,6 +20,11 @@ Vue.filter('fullDateToHour', function (value) {
     return `${value.split(" ")[1].slice(0, 5)}`;
 });
 
+Vue.filter('fullDateToDayMonth', function (value) {
+    var mda = value.slice(5, 10).split("-");
+    return mda[1] + "." + mda[0];
+});
+
 Vue.filter('toMilimeterPerHour', function (value) {
     return `${value} mm/h`;
 });

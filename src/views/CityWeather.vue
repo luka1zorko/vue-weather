@@ -85,6 +85,7 @@ export default {
   border-radius: 8px;
   padding: 10px;
   margin: 10px;
+  cursor: pointer;
 }
 
 #weatherMenu > div.selected {

@@ -7,12 +7,12 @@
                 </div>
                 <span>{{$store.state.captions[$store.state.language].app.home}}</span>
             </button>
-            <button class="headerButton shadowed" @click="back()" v-show="$route.path != '/'">
+            <!--<button class="headerButton shadowed" @click="back()" v-show="$route.path != '/'">
                 <div class="headerIconWrapper">
                     <i class="fas fa-reply"></i>
-                </div>
+                </div
                 <span>{{$store.state.captions[$store.state.language].app.buttonBack}}</span>
-            </button>
+            </button>-->
             <button @click="toLanguageSelect()" class="headerButton shadowed" style="margin-left:auto">
                 <img :src="images[$store.state.language + 'Flag']" alt="sad" class="headerFlag">
                 {{$store.state.languageDict[$store.state.language]}}
@@ -58,7 +58,8 @@
             toLanguageSelect
         },
         created: function() {
-            this.$store.commit('setLanguage', localStorage.getItem("language"))
+            if(localStorage.getItem("language"))
+                this.$store.commit('setLanguage', localStorage.getItem("language"))
         }
     }
 
@@ -146,6 +147,26 @@ button.activated {
     margin-right: 5px;
     margin-top: 5px;
     float: left;
+}
+
+.colorSubZero {
+    color: rgb(0, 0, 255)
+}
+
+.colorSub10 {
+    color: rgb(0, 150, 255);
+}
+
+.colorSub20 {
+    color: rgb(100,200,255);
+}
+
+.colorSub30 {
+    color: rgb(255,215,0);
+}
+
+.colorSub40 {
+    color: rgb(255,0,0);
 }
 
 </style>

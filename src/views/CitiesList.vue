@@ -28,7 +28,7 @@
     <div class="form-group row">
         <label for="cityInput" class="col col-form-label">{{captions.citiesList.enterCityName}}:</label>
         <div class="col">
-            <input type="text" class="form-control" id="cityInput" :placeholder="captions.citiesList.cityName" v-model="newCity">
+            <input type="text" class="form-control" id="cityInput" :placeholder="captions.citiesList.cityName" v-model="newCity" v-on:keyup.enter="confirmCity()">
         </div>
     </div>
     <div id="modal-button-wrapper">
@@ -113,6 +113,7 @@ var citiesWeather = async function(vm){
 var removeCity = function(i) {  
     console.log("removinc city " + i)
     this.cities.splice(i, 1)
+    this.weather.splice(i, 1)
     localStorage.setItem('citiesList', JSON.stringify(this.cities))
 }
 
@@ -173,6 +174,10 @@ export default {
 
 h3 {
     margin-bottom: 25px;
+}
+
+tr {
+    cursor: pointer;
 }
 
 </style>

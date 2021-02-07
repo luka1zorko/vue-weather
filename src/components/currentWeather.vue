@@ -1,7 +1,7 @@
 <template>
     <div id="currentWeatherGrid">
         <!--Current temperature-->
-        <div class="gridCurrentTemp">
+        <div :class="['gridCurrentTemp', tempClass]">
             <div id="mainTemp">{{currentWeather.main.temp | toDegreeC}}</div>
             <div id="weatherDescription">{{currentWeather.weather[0].description}}</div><!--TODO replace text with image-->
         </div>
@@ -24,7 +24,7 @@ export default {
   data() {
       return {
 
-      } 
+      }
   },
   props: {
       currentWeather: Object
@@ -39,6 +39,19 @@ export default {
   computed: {
     captions() {
       return this.$store.state.captions[this.$store.state.language]
+    },
+    tempClass() {
+        var ct = this.currentWeather.main.temp
+        if(ct < 0)
+            return "colorSubZero"
+        else if(ct < 10)
+            return "colorSub10"
+        else if(ct < 20)
+            return "colorSub20"
+        else if(ct < 30)
+            return "colorSub30"
+        else 
+            return "colorSub40"
     }
   }
 }
@@ -60,7 +73,6 @@ export default {
   grid-row-start: 1;
   grid-row-end: 7;
   font-size: 50px;
-  color: deepskyblue; /*TODO change color with temperature*/ 
   display: grid;
   align-items: center;
 }
